@@ -42,6 +42,7 @@ import java.util.List;
 public class Autowasp implements IBurpExtender, ITab, IMessageEditorController, IScannerListener, IProxyListener {
     public IBurpExtenderCallbacks callbacks;
     public IExtensionHelpers helpers;
+    public IBurpCollaboratorClientContext iBurpCollaboratorClientContext;
     public PrintWriter stdout;
     public PrintWriter stderr;
     public TrafficLogic trafficLogic;
@@ -59,7 +60,6 @@ public class Autowasp implements IBurpExtender, ITab, IMessageEditorController, 
     public InstanceTable instanceTable;
     public final List<LoggerEntry> loggerList = new ArrayList<>();
     public final List<InstanceEntry> instanceLog = new ArrayList<>();
-    public ArrayList<JMenuItem> menuList;
     public ScannerLogic scannerLogic;
     public  ProjectWorkspaceFactory projectWorkspace;
     public JComboBox<String> comboBox;
@@ -73,6 +73,9 @@ public class Autowasp implements IBurpExtender, ITab, IMessageEditorController, 
     {
         // keep a reference to our callback object
         this.callbacks = callbacks;
+
+        // obtain iBurpCollaborator object
+        this.iBurpCollaboratorClientContext = callbacks.createBurpCollaboratorClientContext();
 
         // obtain an extension helpers object
         helpers = callbacks.getHelpers();

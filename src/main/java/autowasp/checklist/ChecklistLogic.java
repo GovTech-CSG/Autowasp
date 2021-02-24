@@ -45,7 +45,7 @@ import org.apache.poi.common.usermodel.HyperlinkType;
 
 /* Notes:
  * 1. The URL for the OWASP content page is currently pointing to our own branch of OWASP's repository. 
- * 2. The "fetch checklist" function currently takes around 3 minutes to fetch the data. Consider implementing multi-threading to optimize it.
+ * 2. The "fetch checklist" function currently takes around 3 minutes to fetch the data.
  */
 
 public class ChecklistLogic implements Serializable {
