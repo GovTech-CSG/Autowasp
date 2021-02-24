@@ -57,6 +57,7 @@ public class TrafficLogic {
     private List<String> requestHeaderList = new ArrayList<>();
     private List<String> responseHeaderList = new ArrayList<>();
 	public final ArrayList<String> cgiUrlList;
+	public final String burpCollaboratorHost;
 
 
     final ArrayList<String> httpVerbList = new ArrayList<>();
@@ -65,7 +66,9 @@ public class TrafficLogic {
 		this.extender = extender;
 		this.buildHttpVerbList();
 		this.cgiUrlList = new ArrayList<>();
+		this.burpCollaboratorHost = this.extender.iBurpCollaboratorClientContext.generatePayload(true);
 	}
+
 	// Method to automate and flag network traffic findings
 	public void classifyTraffic(InterceptProxyMessage message) {
 		this.resetLogMsg();
@@ -217,9 +220,8 @@ public class TrafficLogic {
 				if (!directory.endsWith("/") && !directory.contains(".")) {
 					
 					this.urlManipulationFlag = true;
-					String host = "www.evil.com";
 					int port = 80;
-					String urlString = "https://" + host + directory;
+					String urlString = "https://" + burpCollaboratorHost + directory;
 					URL url;
 					
 					url = new URL(urlString);
@@ -228,7 +230,7 @@ public class TrafficLogic {
 					byte[] maliciousRequest = extender.helpers.buildHttpRequest(url);
 					IRequestInfo newRequestInfo = extender.helpers.analyzeRequest(maliciousRequest);
 					List<String> newRequestHeaderList = newRequestInfo.getHeaders();
-					byte[] newResponse = extender.callbacks.makeHttpRequest(host, port, false, maliciousRequest);
+					byte[] newResponse = extender.callbacks.makeHttpRequest(burpCollaboratorHost, port, false, maliciousRequest);
 					IResponseInfo newResponseInfo = extender.helpers.analyzeResponse(newResponse);
 					List<String> newResponseHeaderList = newResponseInfo.getHeaders();
 					
