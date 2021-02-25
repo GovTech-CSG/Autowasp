@@ -97,7 +97,7 @@ public class TrafficLogic {
 					verifyUrlManipulation();
 				}
 			} catch (Exception e) {
-				extender.stdout.println("Exception occurred at classifyTraffic");
+				extender.stdout.println("Exception occurred at classifyTraffic()");
 			}
 		}
 		if (!corHeadersFlag) {
@@ -192,7 +192,7 @@ public class TrafficLogic {
 			}
 		}
 		catch(Exception e) {
-			extender.stdout.println("Exception occurred at verifyHttpVerbRequest");
+			extender.stdout.println("Exception occurred at verifyHttpVerbRequest()");
 		}
 	}
 
@@ -278,8 +278,7 @@ public class TrafficLogic {
 				}
 				
 			} catch (MalformedURLException e) {
-				// TODO Auto-generated catch block
-				extender.stdout.println("ERR: " + Arrays.toString(e.getStackTrace()));
+				extender.stdout.println("MalformedURLException at verifyUrlManipulation()" );
 			}
 		}
 	}

@@ -42,6 +42,7 @@ import javax.swing.event.HyperlinkEvent;
 import java.io.IOException;
 import java.io.File;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -298,7 +299,7 @@ public class ExtenderPanelUI implements Runnable{
                     try {
                         extender.checklistLogic.saveLocalCopy(checklistDestDir.getAbsolutePath());
                     } catch (IOException ioException) {
-                        ioException.printStackTrace();
+                        extender.stdout.println("IOException at setupTopPanel - saveLocalCopyButton" );
                     }
                     extender.callbacks.issueAlert("Local checklist saved to "+ checklistDestDir.getAbsolutePath());
                 scanStatusLabel.setText("Local checklist saved to "+ checklistDestDir.getAbsolutePath());
@@ -339,7 +340,7 @@ public class ExtenderPanelUI implements Runnable{
                 try {
                     extender.projectWorkspace.saveFile(checklistDestDir.getAbsolutePath());
                 } catch (IOException ioException) {
-                    ioException.printStackTrace();
+                    extender.stdout.println("IOException at setupTopPanel - saveCurrentProjectButton" );
                 }
             }
         });

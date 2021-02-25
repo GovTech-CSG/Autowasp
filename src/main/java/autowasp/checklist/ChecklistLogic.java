@@ -584,12 +584,12 @@ public class ChecklistLogic implements Serializable {
 	}
 
 	// Method for save closing of FileOutputStream
-	public static void safeClose(FileOutputStream fos) {
+	public void safeClose(FileOutputStream fos) {
 		if (fos != null) {
 			try {
 				fos.close();
 			} catch (IOException e) {
-
+				extender.stdout.println("FileOutputStream cannot perform safeClose");
 			}
 		}
 	}
@@ -599,7 +599,7 @@ public class ChecklistLogic implements Serializable {
 			try{
 				fis.close();
 			} catch (IOException e) {
-				extender.stderr.println("Error exception at safeClose");
+				extender.stdout.println("FileInputStream cannot perform safeClose");
 			}
 
 		}

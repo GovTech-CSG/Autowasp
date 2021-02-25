@@ -147,8 +147,8 @@ Do you have ideas to make Autowasp even more useful? We welcome contributions fr
    * [Burp Extender APIs](https://portswigger.net/burp/extender/api/burp/package-summary.html)
    * [Singapore Government Developer Portal](https://www.developer.tech.gov.sg/) - leverage on our latest technological solutions, execute your digital projects, and join our community of developers.
    * If you find bugs, log us an [issue ticket](https://github.com/govtech-csg/Autowasp/issues) to report them. Do ensure that the bug has not already been reported by searching on GitHub under Issues.
-   * Have a question but unsure who to contact, drop us an email to Thomas_LIM@tech.gov.sg
-
+   * Have a question but unsure who to contact, log us an [issue ticket](https://github.com/govtech-csg/Autowasp/issues) and we will reach out to you.
+    
 ## Submitting changes
 Please send a [GitHub Pull Request to us](https://github.com/govtech-csg/Autowasp/pull/new/master) with a clear list of what you've done (read more about [pull requests](http://help.github.com/pull-requests/)). 
 
@@ -171,30 +171,15 @@ Autowasp is an open-source software so bear in mind that the open-source communi
 
 # Authors #
 
-👤 **Thomas Lim**
+👤 **[@imthomas93](https://github.com/imthomas93)**
 
- - Email: Thomas_LIM@tech.gov.sg
- - GitHub: [@imthomas93](https://github.com/imthomas93)
+👤 **[@retaric](https://github.com/retaric)**
 
-👤 **Yin Yi De**
+👤 **[@kaiyu92](https://github.com/kaiyu92)**
 
-- Email: YIN_Yide@tech.gov.sg
-- GitHub: [@retaric](https://github.com/retaric)
+👤 **[@aloy-wee-sious](https://github.com/aloy-wee-sious)**
 
-👤 **Quek Kai Yu**
-
-- Email: Kai_Yu_QUEK_from.tp@tech.gov.sg
-- GitHub: [@kaiyu92](https://github.com/kaiyu92)
-
-👤 **Aloysius Wang**
-
-- Email: Aloysius_WANG@tech.gov.sg
-- GitHub: [@aloy-wee-sious](https://github.com/aloy-wee-sious)
-
-👤 **Matthew Ng**
-
-- Email: Matthew_NG_from.TP@tech.gov.sg
-- GitHub: [@matthewng1996](https://github.com/matthewng1996)
+👤 **[@matthewng1996](https://github.com/matthewng1996)**
 
 
 
