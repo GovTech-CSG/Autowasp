@@ -3,7 +3,7 @@
 
 ![picture](./images/Autowasp1.png)
 
-Welcome to Autowasp, a Burp Suite extension that integrates Burp issues logging with OWASP Web Security Testing Guide (WSTG) to provide a streamlined web security testing flow for the modern-day penetration tester! This tool will guide new penetration testers to understand the best practices of web application security and automate OWASP WSTG checks. This README will provide an introduction of Autowasp and its key features, the steps to download it, how to use the tool and end off by sharing how security researchers and developers can make this tool better! 
+Welcome to Autowasp, a Burp Suite extension that integrates Burp issues logging, with OWASP Web Security Testing Guide (WSTG), to provide a streamlined web security testing flow for the modern-day penetration tester! This tool will guide new penetration testers to understand the best practices of web application security and automate OWASP WSTG checks. This README will provide an introduction to the key features of Autowasp, the steps to   download and use the tool, and end off by sharing how security researchers and developers can make this tool better!  
 
 # Existing features #
 
@@ -11,7 +11,8 @@ Currently, Autowasp supports the following functionalities:
 
  **1. Testing Checklist - Be guided by OWASP!**
 
- With the ability to fetch OWASP WSTG checklist, Autowasp aims to aid new penetration testers in conducting penetration testing or web application.
+With the ability to fetch the OWASP WSTG checklist, Autowasp aims to aid new penetration testers in conducting penetration testing or web application security research. The testing checklist tab will extract useful information such as:
+
 * Summary of OWASP WSTG test cases
 * How to test – black/white box testing
 * Relevant testing tools to aid your test
@@ -20,8 +21,8 @@ Currently, Autowasp supports the following functionalities:
 ![picture](./images/OWASP%20WSTG.PNG)
 	 
  **2. Logger Tool - Log down the Vulns!**
- 
-Autowasp Logger tab provides penetration testers with the ability to extract and consolidate Burp Scanner issues. This extender tool will automate and flag vulnerable network traffic issues, allowing users to send vulnerable proxy items from Burp’s `proxy`, `intruder` and `repeater` tab to the extender. These vulnerable issues can then be mapped to WSTG IDs and be used to generate an Excel report upon engaging a penetration test.
+
+Autowasp Logger tab gives penetration testers the ability to extract and consolidate Burp Scanner issues. This extender tool will automate and flag vulnerable network traffic issues, allowing users to send vulnerable proxy items from Burp’s `proxy`, `intruder` and `repeater` tab to the extender. These vulnerable issues can then be mapped to WSTG IDs and be used to generate an Excel report upon engaging in a penetration test.on test.
 	 ![picture](./images/Logger%20Tool.PNG)
 	 ![trafficLogging](./images/trafficLogging.gif)
 
@@ -67,35 +68,35 @@ git clone https://github.com/imthomas93/Autowasp.git
 ***Alternatively, you can use the precompiled jar [here](https://github.com/imthomas93/Autowasp/releases)***
 
 ## Installing the jar
- 1. Open Burp Suite
+ 1. Download the release build [here](https://github.com/govtech-csg/Autowasp/releases).
+ 2. Open Burp Suite.
 	 - Community version: 
 		 - Temporary project with default/preferred settings
 	 - Professional version: 
 		 - Either temporary project or new/existing project
 		 - Default/preferred settings
- 2. Click on **Extender** located on the top row of tabs
- 3. Under the **Extensions** tab on the second row, click **Add**
- 4. Under **Extension Details**, click **Select file** and select the Autowasp JAR file, then click **Next**
- 5. You should see no output or errors and a new tab labeled Autowasp on the top row.
+ 2. Click on **Extender** located on the top row of tabs.
+ 3. Under the **Extensions** tab on the second row, click **Add**.
+ 4. Under **Extension Details**, click **Select file** and select the Autowasp JAR file, then click **Next**.
+ 5. You should see no output or errors and a new tab labelled Autowasp on the top row.
 
 # Usage
 
 ***A general testing workflow using Autowasp would include the following steps:***
 
   1. Display the OWASP checklist in Autowasp for reference.
-  2. Add the target URL to scope and perform scanning.
-  3. Map the scan issues to specific test cases in the checklist OR
-  4. Manually explore the website's pages, then click “Enable Burp Scanner Logging” to display the scanner issues under the **Logger** tab
-  5. Map findings to the checklist
+  2. Add the target URL to scope and perform the scan.
+  3. Map the scan issues to specific test cases in the checklist. OR
+  4. Manually explore the website's pages, then click **Enable Burp Scanner Logging** to display the scanner issues under the **Logger** tab.
+  5. Map findings to the checklist.
   6. Insert security observations and evidence associated with the logs.
-  7. Generate a report containing the checklist, logs, evidence, and comments. (**NOTE**: This feature only works for BurpSuite `v2020.9.1` and before only. We are currently working with PortSwigger for a fix)
-
+  7. Generate a report containing the checklist, logs, evidence, and comments.
 
 ## **1. Displaying the Testing checklist** ##
 
 ### First time: ###
-1. Click the **Fetch WSTG Checklist** button to fetch the checklist from the forked [WSTG documentation](https://github.com/GovTech-CSG/www-project-web-security-testing-guide/blob/master/v42/4-Web_Application_Security_Testing/README.md) (Note: this may take a few minutes due to the number of pages)  
-2. To avoid downloading the WSTG checklist every time, you may click **Save a Local WSTG Checklist** and save the checklist to your local machine. 
+1. Click the **Fetch WSTG Checklist** button to fetch the checklist from the forked [WSTG documentation](https://github.com/GovTech-CSG/www-project-web-security-testing-guide/blob/master/v42/4-Web_Application_Security_Testing/README.md). (Note: this may take a few minutes due to the number of pages)  
+2. To avoid downloading the WSTG checklist every time you open Autowasp, you may click **Save a Local WSTG Checklist** and save the checklist to your local machine. Subsequently, when you use Autowasp, you should choose **Load local checklist** to start your penetration testing work.
 	![fetchChecklist](./images/fetchChecklist.gif)
 	
 ### Subsequent times: ###
@@ -104,7 +105,7 @@ git clone https://github.com/imthomas93/Autowasp.git
 	![uploadChecklist](./images/uploadChecklist.gif)
 	
 ### Excluding Checklist item(s): ###
-* Find any of the testing item not applicable to your application testing, you can exclude these items by selecting the checkbox on the right. 
+* If you find test cases that do not apply to your test, you can exclude these items by selecting the checkbox on the right.
 
 ## **2. Adding to scope and scanning** ##
 1. Add the target URL to scope and perform scan.
@@ -113,27 +114,27 @@ git clone https://github.com/imthomas93/Autowasp.git
 2. Manually explore the website's pages, then click **Enable Burp Scanner Logging** to display the scanner issues under the **Logger** tab.
  ![scannerLogic](./images/scannerLogic.gif)
  
-3. Note that items from **Proxy -> HTTP History**, **Intruder** & **Repeater** tabs can be sent to Autowasp by right clicking on them, followed by clicking **Send to Autowasp**. 
+3. Note that items from **Proxy -> HTTP History**, **Intruder** & **Repeater** tabs can be sent to Autowasp by right-clicking on them, followed by clicking **Send to Autowasp**.
  ![SendfromProxy](./images/SendfromProxy.gif)
 
 ## **3. Mapping findings to the checklist** ##
 
-- Click on a specific log in the **Logger** table
+- Click on a specific log in the **Logger** table.
 - Click on the empty **Mapped to OWASP WSTG** field on the right side of the table entry.
-- Choose a specific test to map the log to using the drop-down list
-* Note that his will only work if you have the checklist already displayed
+- Choose a specific test to map the log to using the drop-down list.
+* Note that his will only work if you have the checklist already displayed.
  ![mapToCheckList](./images/mapToCheckList.gif)
 
-## **4. Inserting tester comments and evidence** ##
-1. Click on a specific log in the **Logger** table
-2. On the lowest row of tabs, click on either **Pen Tester Comments** or **Evidence**
-3. Enter what you wish to note down, then click **Save Comments** or **Save Evidence**
+## **4. Insert security observations and evidence associated with the logs** ##
+1. Click on a specific log in the **Logger** table.
+2. On the lowest row of tabs, click on either **Pen Tester Comments** or **Evidence**.
+3. Enter what you wish to note down, then click **Save Comments** or **Save Evidence**.
  ![writeComments](./images/writeComments.gif)
 
 ## **5. Report Generation** ##
 
-1. Click on **Generate Excel File** and choose a location to save the file to
-2. Open the excel file and check that the observation, comments, and evidence, have been saved beside the associated test case
+1. Click on **Generate Excel File** and choose a location to save the file to.
+2. Open the excel file and check that the observation, comments, and evidence have been saved beside the associated test case
 3. You can also find the URL pointing to the full article hosted on OWASP's GitHub repository for every test case in the checklist
  ![generateReport](./images/generateReport.gif)
 
@@ -141,11 +142,11 @@ git clone https://github.com/imthomas93/Autowasp.git
 
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/govtech-csg/Autowasp/issues)
 
-Do you have  ideas to make Autowasp even more useful? WWe welcome contributions from developers like yourself to improve the Autowasp tool and highlight any potential problems. Here are some important resources to get you started:
+Do you have ideas to make Autowasp even more useful? We welcome contributions from developers like yourself to improve the Autowasp tool and highlight any potential problems. Here are some important resources to get you started:
 
    * [Burp Extender APIs](https://portswigger.net/burp/extender/api/burp/package-summary.html)
    * [Singapore Government Developer Portal](https://www.developer.tech.gov.sg/) - leverage on our latest technological solutions, execute your digital projects, and join our community of developers.
-   * If you find bugs, log us an [issue ticket](https://github.com/govtech-csg/Autowasp/issues) to report them. Do ensure the bug has not already been reported by searching on GitHub under Issues.
+   * If you find bugs, log us an [issue ticket](https://github.com/govtech-csg/Autowasp/issues) to report them. Do ensure that the bug has not already been reported by searching on GitHub under Issues.
    * Have a question but unsure who to contact, drop us an email to Thomas_LIM@tech.gov.sg
 
 ## Submitting changes
@@ -165,7 +166,8 @@ Start reading our code and you'll get the hang of it. The code serves as an exte
   * Please do not add additional table listener as it affects the user experience of the extender. That said, we welcome changes to make Autowasp better!
   * Add a comment whenever you include a new function so that we can understand your contribution better.
 
-Autowasp is an open-source software so bear in mind that the open-source community can read your code. Do adhere to our coding conventions detailed in GitHub Readme and keep your codes understandable and easy to follow. Think of it like driving a car: you may love performing donuts, but you have to consider the well-being of your passengers and make the ride as smooth as possible. That is of course, <em>unless your passengers love the thrill as well.</em>
+Autowasp is an open-source software so bear in mind that the open-source community can read your code. Do adhere to our coding conventions detailed in GitHub Readme and keep your codes understandable and easy to follow. Think of it like driving a car: you may love performing doughnuts but you have to consider the well-being of your passengers and make the ride as smooth as possible. That is of course, <em>unless your passengers love the thrill as well.</em>
+
 
 # Authors #
 
