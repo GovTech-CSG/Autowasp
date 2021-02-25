@@ -12,3 +12,7 @@ src/main/java/.DS_Store
 *.iml
 
 .DS_Store
+
+src/main/java/burp/
+!src/main/java/burp/BurpExtender.java
+!src/main/java/burp/.gitignore
