@@ -178,7 +178,7 @@ public class Autowasp implements IBurpExtender, ITab, IMessageEditorController, 
                 }
             }
         } catch (MalformedURLException e) {
-            stdout.println("\nException: " + Arrays.toString(e.getStackTrace()));
+            stdout.println("MalformedURLException at processProxyMessage()");
         }
     }
 

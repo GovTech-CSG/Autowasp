@@ -204,23 +204,23 @@ public class ProjectWorkspaceFactory implements Serializable {
 	}
 
 	// Method for save closing of FileOutputStream
-	public static void safeClose(FileOutputStream fos) {
+	public  void safeClose(FileOutputStream fos) {
 		if (fos != null) {
 			try {
 				fos.close();
 			} catch (IOException e) {
-
+				extender.stdout.println("FileOutputStream cannot safe close");
 			}
 		}
 	}
 
 	// Method for save closing of FileInputStream
-	public static void safeClose(FileInputStream fis) {
+	public  void safeClose(FileInputStream fis) {
 		if (fis != null) {
 			try {
 				fis.close();
 			} catch (IOException e) {
-
+				extender.stdout.println("FileInputStream cannot safe close");
 			}
 		}
 	}
