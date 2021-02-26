@@ -52,9 +52,8 @@ public class ChecklistLogic implements Serializable {
 	
 	private final Autowasp extender;
 	private Document anyPage;
-	public String SHA256_CHECKLIST_HASH = "5d003c0487b68760bc97dc7a754a68c9196f677b95b79d1d5ac8e4bf04f61ede";
-	public final String GITHUB_REPO_URL = "https://github.com/GovTech-CSG/www-project-web-security-testing-guide/blob/master/v42/4-Web_Application_Security_Testing/README.md";
-
+	public String SHA256_CHECKLIST_HASH = "0ba6cc36c178606a924aa27579666220b87f4bd71d9fa329e55e90622f1301ac";
+	public final String GITHUB_REPO_URL = "https://github.com/GovTech-CSG/wstg/blob/master/document/4-Web_Application_Security_Testing/README.md";
 
 	public ChecklistLogic(Autowasp extender) {
 		this.extender = extender;
@@ -122,7 +121,8 @@ public class ChecklistLogic implements Serializable {
 			Elements filePathElements2 = anyPage.getElementsByTag("td");
 
 			// Get the required information from the HTML elements and save them into a hash map
-			String refNumber = filePathElements2.get(3).text(); // get the ref number from table td tag
+			String refNumber = filePathElements2.first().text(); // get the ref number from table td tag
+
 			String category = filePathElements.get(6).text().split("-", 2)[1].replace("_", " ");
 			String testName = filePathElements.get(8).text().split("-", 2)[1].replace("_", " ");
 			testName = testName.split("[.]", 2)[0]; // To get rid of the .md extension
@@ -522,8 +522,8 @@ public class ChecklistLogic implements Serializable {
 			FileOutputStream excelWriter = new FileOutputStream(new File(absoluteFilePath + File.separator + "OWASP Checklist.xlsx"));
 			checklistWorkbook.write(excelWriter);
 			excelWriter.close();
-			extender.callbacks.issueAlert("Excel report written to " + absoluteFilePath + File.separator + "OWASP Checklist.xlsx");
-			extender.extenderPanelUI.scanStatusLabel.setText("Excel report written to " + absoluteFilePath + File.separator + "OWASP Checklist.xlsx");
+			extender.callbacks.issueAlert("Excel report generated!");
+			extender.extenderPanelUI.scanStatusLabel.setText("Excel report generated!");
 		} catch (IOException e) {
 			extender.callbacks.issueAlert("Error, file not found");
 		}
