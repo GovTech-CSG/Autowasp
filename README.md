@@ -85,7 +85,7 @@ git clone https://github.com/imthomas93/Autowasp.git
 ***A general testing workflow using Autowasp would include the following steps:***
 
   1. Display the OWASP checklist in Autowasp for reference.
-  2. Add the target URL to scope and perform the scan.
+  2. Add the target URL to **Scope**. The scope function will extract related results from Burp Scanner and listen for insecure web request and responses.
   3. Map the scan issues to specific test cases in the checklist. OR
   4. Manually explore the website's pages, then click **Enable Burp Scanner Logging** to display the scanner issues under the **Logger** tab.
   5. Map findings to the checklist.
