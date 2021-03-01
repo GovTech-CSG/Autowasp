@@ -285,7 +285,7 @@ public class TrafficLogic {
 
 	// Method to identify the use of basic authentication headers
 	private void verifyBasicAuthentication() {
-		for (String header : responseHeaderList) {
+		for (String header : requestHeaderList) {
 			if (header.toLowerCase().contains("authorization: basic")) {
 				String[] tokens = header.split(" ");
 				String encode = tokens[2];
