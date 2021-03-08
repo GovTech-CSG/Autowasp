@@ -18,3 +18,5 @@ src/main/java/burp/
 !src/main/java/burp/.gitignore
 
 build/
+
+src/main/java/META-INF/
