@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Government Technology Agency
+ * Copyright (c) 2021 Government Technology Agency
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -52,7 +52,6 @@ public class ChecklistLogic implements Serializable {
 	
 	private final Autowasp extender;
 	private Document anyPage;
-	public String SHA256_CHECKLIST_HASH = "0ba6cc36c178606a924aa27579666220b87f4bd71d9fa329e55e90622f1301ac";
 	public final String GITHUB_REPO_URL = "https://github.com/GovTech-CSG/wstg/blob/master/document/4-Web_Application_Security_Testing/README.md";
 
 	public ChecklistLogic(Autowasp extender) {
@@ -239,7 +238,7 @@ public class ChecklistLogic implements Serializable {
 	}
 
 	// Re-creates the checklistLog containing ChecklistEntry objects from the uploaded local file
-	public void loadLocalCopy(String absoluteFilePath) {
+	public void loadLocalCopy() {
 		boolean eof = false;
 		ChecklistEntry checklistEntryTemp;
 		extender.checklistLog.clear();
@@ -371,13 +370,13 @@ public class ChecklistLogic implements Serializable {
 				return null;
 			}
 		};
-		FileInputStream fileInputStream = null;
-		try {
-			fileInputStream = new FileInputStream(absoluteFilePath);
-			ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+
+		InputStream inputStream = getClass().getResourceAsStream("/OWASP_WSTG_local_26Feb2021");
+		try{
+			ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
 
 			while(!eof){
-				try {
+				try{
 					checklistEntryTemp = (ChecklistEntry) objectInputStream.readObject();
 					checklistEntryList.add(checklistEntryTemp);
 					extender.checkListHashMap.put(checklistEntryTemp.refNumber, checklistEntryTemp);
@@ -387,17 +386,15 @@ public class ChecklistLogic implements Serializable {
 				}
 			}
 			objectInputStream.close();
-		} catch (FileNotFoundException e){
-			extender.stdout.println("File not found");
-		} catch (IOException e){
+		} catch (IOException e) {
 			extender.stdout.println("Cannot read file");
-		} catch (ClassNotFoundException e)
-		{
+		}
+		catch (ClassNotFoundException e) {
 			extender.stdout.println("LoggerEntry class not found");
 		}
 		finally {
-			if (fileInputStream != null){
-				safeClose(fileInputStream);
+			if (inputStream != null){
+				safeClose((FileInputStream) inputStream);
 			}
 		}
 	}

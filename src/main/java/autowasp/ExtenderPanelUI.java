@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Government Technology Agency
+ * Copyright (c) 2021 Government Technology Agency
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -205,38 +205,36 @@ public class ExtenderPanelUI implements Runnable{
             generateWebChecklistButton.setEnabled(false);
             extender.checklistLog.clear(); //Clears the current checklistLog so there won't be duplicates even if the user clicks on fetch checklist multiple times
             running.set(true);
-            extender.stdout.println("TL debug, running.get() is now " + running.toString());
+
             Runnable runnable = () -> {
                 while(running.get()){
                     try{
                         Thread.sleep(500);
                     }
-                    catch(InterruptedException e12){
-                        Thread.currentThread().interrupt();
-                        extender.stdout.println("Fetching checklist Thread interrupted");
-                    }
-                    if (running.get()){
-                        List<String> articleURLs;
-                        articleURLs  = extender.checklistLogic.scrapeArticleURLs();
-
-                            for (String url : articleURLs) {
-                                extender.checklistLogic.logNewChecklistEntry(url);
-                            }
-                        scanStatusLabel.setText("Checklist successfully generated from the web");
-                        extender.callbacks.issueAlert("Checklist successfully generated from the web");
-                        extender.loggerTable.generateWSTGList();
-                        generateExcelReportButton.setEnabled(true);
-                        saveLocalCopyButton.setEnabled(true);
+                    catch(InterruptedException e1){
                         Thread.currentThread().interrupt();
                     }
-                    else{
-                        extender.stdout.println("TL debug, in else loop running.get() is now " + running.toString());
+                    List<String> articleURLs;
+                    articleURLs  = extender.checklistLogic.scrapeArticleURLs();
+                    for (String url : articleURLs) {
+                        if (running.get()){
+                            extender.checklistLogic.logNewChecklistEntry(url);
+                        }
+                        else{
+                            // need to force stop the logging as new checklist entry here.
+                            extender.checklistLog.clear(); //Clears the current checklistLog so there won't be duplicates even if the user clicks on fetch checklist multiple times
+                        }
                     }
                 }
-                running.set(false);
             };
             thread = new Thread(runnable);
             thread.start();
+            scanStatusLabel.setText("Checklist successfully generated from the web");
+            extender.callbacks.issueAlert("Checklist successfully generated from the web");
+            extender.loggerTable.generateWSTGList();
+            generateExcelReportButton.setEnabled(true);
+            saveLocalCopyButton.setEnabled(true);
+            Thread.currentThread().interrupt();
         });
 
         //On clicking, cancel fetch checklist from web
@@ -248,9 +246,7 @@ public class ExtenderPanelUI implements Runnable{
             saveLocalCopyButton.setEnabled(false);
             cancelFetchButton.setEnabled(false);
             running.set(false);
-            extender.stdout.println("TL debug, running.get() is now " + running.toString());
             Thread.currentThread().interrupt();
-            extender.checklistLog.clear(); //Clears the current checklistLog so there won't be duplicates even if the user clicks on fetch checklist multiple times
             extender.callbacks.issueAlert("Fetch checklist cancelled");
             scanStatusLabel.setText("Fetch checklist cancelled");
         });
