@@ -28,7 +28,7 @@ Autowasp Logger tab gives penetration testers the ability to extract and consoli
 
 # Prerequisites #
 
- - Burp Suite (either Community or Professional)
+ - Burp Suite Community (BurpScanner logging not available) or Professional
 
 # Dependencies #
 
@@ -63,6 +63,7 @@ git clone https://github.com/imthomas93/Autowasp.git
         9. poi-ooxml-4.1.0
         10. poi-ooxml-schemas-4.1.0
         11. xmlbeans-3.1.0
+        12. burp-extender-api-1.7.13	
 7. Click Build Project (***Build > Build Project***)
 8. The autowasp.jar file will be built in /repository location/out/artifacts/chosen_jar_name/chosen_jar_name.jar
 ***Alternatively, you can use the precompiled jar [here](https://github.com/imthomas93/Autowasp/releases)***
@@ -96,7 +97,7 @@ git clone https://github.com/imthomas93/Autowasp.git
 
 ### First time: ###
 1. Click the **Fetch WSTG Checklist** button to fetch the checklist from the forked [WSTG documentation](https://github.com/GovTech-CSG/www-project-web-security-testing-guide/blob/master/v42/4-Web_Application_Security_Testing/README.md). (Note: this may take a few minutes due to the number of pages)  
-2. To avoid downloading the WSTG checklist every time you open Autowasp, you may click **Save a Local WSTG Checklist** and save the checklist to your local machine. Subsequently, when you use Autowasp, you should choose **Load local checklist** to start your penetration testing work.
+2. If you are working in an offline environment, click **Load local checklist** to start your penetration testing work. Do note that local checklist may not be updated frequently.
 	![fetchChecklist](./images/fetchChecklist.gif)
 	
 ### Subsequent times: ###
