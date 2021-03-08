@@ -46,7 +46,7 @@ Autowasp Logger tab gives penetration testers the ability to extract and consoli
 
 1. Clone the repository to a location of your choice
 ```
-git clone https://github.com/imthomas93/Autowasp.git
+git clone https://github.com/govtech-csg/Autowasp.git
 ```
 2. Open IntelliJ, you can either import Project or Open Project  (***File > Open..***)
 3. Head to ***File>Project Structure...*** (***Ctrl+Alt+Shift+S***)
