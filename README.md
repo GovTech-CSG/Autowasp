@@ -38,6 +38,7 @@ Autowasp Logger tab gives penetration testers the ability to extract and consoli
 - Jsoup 1.12.1
 - Apache POI 4.1.0
 - XMLBeans 3.1.0
+- Burp Extender APIs 1.7.13
 
 # Installation #
 ## Building the jar 
@@ -66,7 +67,7 @@ git clone https://github.com/imthomas93/Autowasp.git
         12. burp-extender-api-1.7.13	
 7. Click Build Project (***Build > Build Project***)
 8. The autowasp.jar file will be built in /repository location/out/artifacts/chosen_jar_name/chosen_jar_name.jar
-***Alternatively, you can use the precompiled jar [here](https://github.com/imthomas93/Autowasp/releases)***
+***Alternatively, you can use the precompiled jar [here](https://github.com/govtech-csg/Autowasp/releases)***
 
 ## Installing the jar
  1. Download the release build [here](https://github.com/govtech-csg/Autowasp/releases).
