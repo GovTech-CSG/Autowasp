@@ -70,6 +70,7 @@ public class ExtenderPanelUI implements Runnable{
     private JButton generateExcelReportButton;
     private JFileChooser fileChooser;
     private File checklistDestDir;
+    private boolean selfUpdateLocal = false;
     
     // Loggers UI
 	private JTabbedPane bottomModulesTabs;
@@ -200,10 +201,12 @@ public class ExtenderPanelUI implements Runnable{
             extender.callbacks.issueAlert("Fetching checklist now");
             scanStatusLabel.setText("Fetching checklist now");
             generateLocalChecklistButton.setEnabled(false);
+            cancelFetchButton.setEnabled(true);
             generateWebChecklistButton.setEnabled(false);
             extender.checklistLog.clear(); //Clears the current checklistLog so there won't be duplicates even if the user clicks on fetch checklist multiple times
             running.set(true);
-                Runnable runnable = () -> {
+            extender.stdout.println("TL debug, running.get() is now " + running.toString());
+            Runnable runnable = () -> {
                 while(running.get()){
                     try{
                         Thread.sleep(500);
@@ -211,21 +214,23 @@ public class ExtenderPanelUI implements Runnable{
                     catch(InterruptedException e12){
                         Thread.currentThread().interrupt();
                         extender.stdout.println("Fetching checklist Thread interrupted");
-                        running.set(false);
                     }
                     if (running.get()){
-                            List<String> articleURLs;
-                            articleURLs  = extender.checklistLogic.scrapeArticleURLs();
+                        List<String> articleURLs;
+                        articleURLs  = extender.checklistLogic.scrapeArticleURLs();
 
                             for (String url : articleURLs) {
-                            extender.checklistLogic.logNewChecklistEntry(url);
-                        }
+                                extender.checklistLogic.logNewChecklistEntry(url);
+                            }
                         scanStatusLabel.setText("Checklist successfully generated from the web");
                         extender.callbacks.issueAlert("Checklist successfully generated from the web");
                         extender.loggerTable.generateWSTGList();
                         generateExcelReportButton.setEnabled(true);
                         saveLocalCopyButton.setEnabled(true);
                         Thread.currentThread().interrupt();
+                    }
+                    else{
+                        extender.stdout.println("TL debug, in else loop running.get() is now " + running.toString());
                     }
                 }
                 running.set(false);
@@ -236,15 +241,15 @@ public class ExtenderPanelUI implements Runnable{
 
         //On clicking, cancel fetch checklist from web
         cancelFetchButton = new JButton("Cancel Fetch");
-        cancelFetchButton.setEnabled(false);
         cancelFetchButton.addActionListener(e -> {
-            running.set(false);
-            Thread.currentThread().interrupt();
-            generateLocalChecklistButton.setEnabled(true);
             generateWebChecklistButton.setEnabled(true);
+            generateLocalChecklistButton.setEnabled(true);
             generateExcelReportButton.setEnabled(false);
-            generateLocalChecklistButton.setEnabled(false);
             saveLocalCopyButton.setEnabled(false);
+            cancelFetchButton.setEnabled(false);
+            running.set(false);
+            extender.stdout.println("TL debug, running.get() is now " + running.toString());
+            Thread.currentThread().interrupt();
             extender.checklistLog.clear(); //Clears the current checklistLog so there won't be duplicates even if the user clicks on fetch checklist multiple times
             extender.callbacks.issueAlert("Fetch checklist cancelled");
             scanStatusLabel.setText("Fetch checklist cancelled");
@@ -253,34 +258,13 @@ public class ExtenderPanelUI implements Runnable{
         //On clicking, opens a file chooser for the user to upload a local copy of the checklist
         generateLocalChecklistButton = new JButton("Upload Local WSTG Checklist");
         generateLocalChecklistButton.addActionListener(e -> {
-            int userOption = fileChooser.showOpenDialog(null);  //Returns the integer representation of the user's choice
-
-            if (userOption == JFileChooser.APPROVE_OPTION) {
-                File chosenFile = fileChooser.getSelectedFile();
-                String sha256Hash = "";
-                try {
-                    sha256Hash = extender.checklistLogic.toHash(chosenFile);
-                } catch (NoSuchAlgorithmException ex) {
-                    extender.stdout.println("Exception occurred at setupTopPanel");
-                }
-
-                //Validates whether the user has selected the correct text file.
-                if (!sha256Hash.equals(extender.checklistLogic.SHA256_CHECKLIST_HASH)) {
-                    //if (!chosenFile.getAbsolutePath().contains("OWASPChecklistData")) {
-                    scanStatusLabel.setText("Error, this is not the correct local checklist file");
-                    extender.callbacks.issueAlert("Error, this is not the correct local checklist file");
-                }
-                else {
-                    extender.checklistLogic.loadLocalCopy(chosenFile.getAbsolutePath());
-                    generateLocalChecklistButton.setEnabled(false);
-                    generateWebChecklistButton.setEnabled(false);
-                    cancelFetchButton.setEnabled(false);
-                    generateExcelReportButton.setEnabled(true);
-                    saveLocalCopyButton.setEnabled(true);
-                    extender.loggerTable.generateWSTGList();
-                    scanStatusLabel.setText("Local checklist uploaded to Autowasp.");
-                }
-            }
+            generateLocalChecklistButton.setEnabled(false);
+            generateWebChecklistButton.setEnabled(true);
+            cancelFetchButton.setEnabled(false);
+            generateExcelReportButton.setEnabled(true);
+            extender.checklistLogic.loadLocalCopy();
+            extender.loggerTable.generateWSTGList();
+            scanStatusLabel.setText("Local checklist uploaded to Autowasp.");
         });
         
         //On clicking, opens a file chooser for the user to save a local copy of the checklist in a text file. Note that the contents of the file will be in HTML syntax
@@ -302,8 +286,7 @@ public class ExtenderPanelUI implements Runnable{
                         extender.stdout.println("IOException at setupTopPanel - saveLocalCopyButton" );
                     }
                     extender.callbacks.issueAlert("Local checklist saved to "+ checklistDestDir.getAbsolutePath());
-                scanStatusLabel.setText("Local checklist saved to "+ checklistDestDir.getAbsolutePath());
-
+                    scanStatusLabel.setText("Local checklist saved to "+ checklistDestDir.getAbsolutePath());
                 }
             }
         });
@@ -383,7 +366,9 @@ public class ExtenderPanelUI implements Runnable{
         testingPanel.add(generateWebChecklistButton);
         testingPanel.add(cancelFetchButton);
         testingPanel.add(generateLocalChecklistButton);
-        testingPanel.add(saveLocalCopyButton);
+        if (selfUpdateLocal){
+            testingPanel.add(saveLocalCopyButton);
+        }
         testingPanel.add(generateExcelReportButton);
         testingPanel.add(saveCurrentProjectButton);
         miscPanel.add(deleteEntryButton);
@@ -392,7 +377,6 @@ public class ExtenderPanelUI implements Runnable{
         miscPanel.add(loadProjectButton);
         //default both delete buttons are disabled.
         disabledInitialButtons();
-
 
         // Add setup panel and status panel to top panel
         topPanel.add(setupPanel, BorderLayout.PAGE_START);
@@ -433,7 +417,7 @@ public class ExtenderPanelUI implements Runnable{
         saveCommentsButton.addActionListener(e -> {
             //Added a line break to create a space between pentester comments and affected instances
             extender.loggerTable.modifyComments(penTesterCommentBox.getText().trim() + "\n");
-});
+        });
         commentsPanel.add(saveCommentsButton);
         commentsPanel.add(clearCommentsButton);
         internalPenTesterCommentsSplitPane.setTopComponent(commentsPanel);
@@ -453,8 +437,7 @@ public class ExtenderPanelUI implements Runnable{
         evidencePanel.add(clearEvidencesButton);
         internalEvidencesSplitPane.setTopComponent(evidencePanel);
         internalEvidencesSplitPane.setBottomComponent(evidenceBoxScrollPane);
-        
-        
+
         // Lower half - Instances Tab
         requestViewer = extender.callbacks.createMessageEditor(extender, false);
         responseViewer = extender.callbacks.createMessageEditor(extender, false);
@@ -553,6 +536,7 @@ public class ExtenderPanelUI implements Runnable{
         this.deleteInstanceButton.setEnabled(false);
         generateExcelReportButton.setEnabled(false);
         saveLocalCopyButton.setEnabled(false);
+        cancelFetchButton.setEnabled(false);
     }
 
     // To allow instance deletion button only
