@@ -50,23 +50,15 @@ git clone https://github.com/govtech-csg/Autowasp.git
 ```
 2. Open IntelliJ, you can either import Project or Open Project  (***File > Open..***)
 3. Head to ***File>Project Structure...*** (***Ctrl+Alt+Shift+S***)
-4. Under ***Project Settings**, select ***Artifacts***, click the ***+***, add ***JAR*** and select ***Empty***
-5. Replace ***unnamed*** with any name of your choice
-6. Under Available Elements, Right-click and extract the following Maven libraries into Output Root
-        1. commons-codec:1.12
-        2. commons-collections:4.4.4
-        3. commons-compress:1.18
-        4. commons-math3:3.6.1
-        5. curvesapi-1.06
-        6. gson-2.8.5
-        7. jsoup-1.12.1
-        8. poi-4.1.0
-        9. poi-ooxml-4.1.0
-        10. poi-ooxml-schemas-4.1.0
-        11. xmlbeans-3.1.0
-        12. burp-extender-api-1.7.13	
-7. Click Build Project (***Build > Build Project***)
-8. The autowasp.jar file will be built in /repository location/out/artifacts/chosen_jar_name/chosen_jar_name.jar
+4. Under Main Class, select ***BurpExtender (burp)***
+5. Under ***Project Settings***, select ***Artifacts***, click the ***+***, add ***JAR*** and select ***From modules with dependencies..***
+![picture](./images/Setup_jar_file.png)
+6. Under Main Class, select BurpExtender (burp). Click Ok
+7. Similarly under ***Project Settings**, select ***Modules***, add /src/main/resources as your project resources.
+![picture](./images/Setup_project_resources.png)
+7. Click apply at bottom right and close ***Project Settings***
+8. Click Build Project (***Build > Build Project***)
+9. The autowasp.jar file will be built in /repository location/out/artifacts/chosen_jar_name/chosen_jar_name.jar
 ***Alternatively, you can use the precompiled jar [here](https://github.com/govtech-csg/Autowasp/releases)***
 
 ## Installing the jar
