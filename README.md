@@ -52,7 +52,9 @@ git clone https://github.com/govtech-csg/Autowasp.git
 3. Head to ***File>Project Structure...*** (***Ctrl+Alt+Shift+S***)
 4. Under Main Class, select ***BurpExtender (burp)***
 5. Under ***Project Settings**, select ***Artifacts***, click the ***+***, add ***JAR*** and select ***From modules with dependencies..***
+![picture](./images/Setup_jar_file.png)
 6. Similar,y under ***Project Settings**, select ***Modules***, add /src/main/resources as your project resources.
+![picture](./images/Setup_project_resources.png)
 7. Click apply at bottom right and close ***Project Settings***
 8. Click Build Project (***Build > Build Project***)
 9. The autowasp.jar file will be built in /repository location/out/artifacts/chosen_jar_name/chosen_jar_name.jar
