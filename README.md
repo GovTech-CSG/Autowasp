@@ -28,7 +28,7 @@ Autowasp Logger tab gives penetration testers the ability to extract and consoli
 
 # Prerequisites #
 
- - Burp Suite (either Community or Professional)
+ - Burp Suite Community (BurpScanner logging not available) or Professional
 
 # Dependencies #
 
@@ -38,6 +38,7 @@ Autowasp Logger tab gives penetration testers the ability to extract and consoli
 - Jsoup 1.12.1
 - Apache POI 4.1.0
 - XMLBeans 3.1.0
+- Burp Extender APIs 1.7.13
 
 # Installation #
 ## Building the jar 
@@ -45,27 +46,20 @@ Autowasp Logger tab gives penetration testers the ability to extract and consoli
 
 1. Clone the repository to a location of your choice
 ```
-git clone https://github.com/imthomas93/Autowasp.git
+git clone https://github.com/govtech-csg/Autowasp.git
 ```
 2. Open IntelliJ, you can either import Project or Open Project  (***File > Open..***)
 3. Head to ***File>Project Structure...*** (***Ctrl+Alt+Shift+S***)
-4. Under ***Project Settings**, select ***Artifacts***, click the ***+***, add ***JAR*** and select ***Empty***
-5. Replace ***unnamed*** with any name of your choice
-6. Under Available Elements, Right-click and extract the following Maven libraries into Output Root
-        1. commons-codec:1.12
-        2. commons-collections:4.4.4
-        3. commons-compress:1.18
-        4. commons-math3:3.6.1
-        5. curvesapi-1.06
-        6. gson-2.8.5
-        7. jsoup-1.12.1
-        8. poi-4.1.0
-        9. poi-ooxml-4.1.0
-        10. poi-ooxml-schemas-4.1.0
-        11. xmlbeans-3.1.0
-7. Click Build Project (***Build > Build Project***)
-8. The autowasp.jar file will be built in /repository location/out/artifacts/chosen_jar_name/chosen_jar_name.jar
-***Alternatively, you can use the precompiled jar [here](https://github.com/imthomas93/Autowasp/releases)***
+4. Under Main Class, select ***BurpExtender (burp)***
+5. Under ***Project Settings***, select ***Artifacts***, click the ***+***, add ***JAR*** and select ***From modules with dependencies..***
+![picture](./images/Setup_jar_file.png)
+6. Under Main Class, select BurpExtender (burp). Click Ok
+7. Similarly under ***Project Settings**, select ***Modules***, add /src/main/resources as your project resources.
+![picture](./images/Setup_project_resources.png)
+7. Click apply at bottom right and close ***Project Settings***
+8. Click Build Project (***Build > Build Project***)
+9. The autowasp.jar file will be built in /repository location/out/artifacts/chosen_jar_name/chosen_jar_name.jar
+***Alternatively, you can use the precompiled jar [here](https://github.com/govtech-csg/Autowasp/releases)***
 
 ## Installing the jar
  1. Download the release build [here](https://github.com/govtech-csg/Autowasp/releases).
@@ -96,7 +90,7 @@ git clone https://github.com/imthomas93/Autowasp.git
 
 ### First time: ###
 1. Click the **Fetch WSTG Checklist** button to fetch the checklist from the forked [WSTG documentation](https://github.com/GovTech-CSG/www-project-web-security-testing-guide/blob/master/v42/4-Web_Application_Security_Testing/README.md). (Note: this may take a few minutes due to the number of pages)  
-2. To avoid downloading the WSTG checklist every time you open Autowasp, you may click **Save a Local WSTG Checklist** and save the checklist to your local machine. Subsequently, when you use Autowasp, you should choose **Load local checklist** to start your penetration testing work.
+2. If you are working in an offline environment, click **Load local checklist** to start your penetration testing work. Do note that local checklist may not be updated frequently.
 	![fetchChecklist](./images/fetchChecklist.gif)
 	
 ### Subsequent times: ###
