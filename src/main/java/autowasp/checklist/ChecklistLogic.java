@@ -104,7 +104,6 @@ public class ChecklistLogic implements Serializable {
 			extender.stderr.println("Error 1, Github page not found. Cancel fetch");
 			extender.callbacks.issueAlert("Error 1, Github page not found. Cancel fetch");
 			extender.extenderPanelUI.scanStatusLabel.setText("Error 1, Github page not found. Cancel fetch");
-			extender.extenderPanelUI.cancelFetchButton.setEnabled(true);
 		}
 		return null;
 
@@ -136,7 +135,6 @@ public class ChecklistLogic implements Serializable {
 			extender.stderr.println("Error 2, table element not found. Cancel Fetch");
 			extender.callbacks.issueAlert("Error 2, table element not found. Cancel Fetch");
 			extender.extenderPanelUI.scanStatusLabel.setText("Error 2, table element not found. Cancel Fetch");
-			extender.extenderPanelUI.cancelFetchButton.setEnabled(true);
 		}
 		return null;
 	}
@@ -203,7 +201,6 @@ public class ChecklistLogic implements Serializable {
 			extender.stderr.println("Error 3, Content page not found. Cancel fetch");
 			extender.callbacks.issueAlert("Error 3, Content page not found. Cancel fetch");
 			extender.extenderPanelUI.scanStatusLabel.setText("Error 3, Content page not found. Cancel fetch");
-			extender.extenderPanelUI.cancelFetchButton.setEnabled(true);
 		}
 		return null;
 	}
@@ -385,6 +382,7 @@ public class ChecklistLogic implements Serializable {
 					eof = true;
 				}
 			}
+			extender.loggerTable.generateWSTGList();
 			objectInputStream.close();
 		} catch (IOException e) {
 			extender.stdout.println("Cannot read file");
