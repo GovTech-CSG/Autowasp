@@ -200,41 +200,47 @@ public class ExtenderPanelUI implements Runnable{
             extender.callbacks.issueAlert("Fetching checklist now");
             scanStatusLabel.setText("Fetching checklist now");
             generateLocalChecklistButton.setEnabled(false);
-            generateWebChecklistButton.setEnabled(false);
             cancelFetchButton.setEnabled(true);
+            generateWebChecklistButton.setEnabled(false);
             extender.checklistLog.clear(); //Clears the current checklistLog so there won't be duplicates even if the user clicks on fetch checklist multiple times
             running.set(true);
 
             Runnable runnable = () -> {
-                while(running.get()){
-                    try{
-                        Thread.sleep(500);
-                    }
-                    catch(InterruptedException e1){
-                        Thread.currentThread().interrupt();
-                    }
-                    List<String> articleURLs;
-                    articleURLs  = extender.checklistLogic.scrapeArticleURLs();
-                    for (String url : articleURLs) {
-                        if (running.get()){
-                            extender.checklistLogic.logNewChecklistEntry(url);
+                int counter = 1;
+                List<String> articleURLs;
+                articleURLs  = extender.checklistLogic.scrapeArticleURLs();
+
+                while(running.get() && counter < articleURLs.size()){
+                    for (String url : articleURLs){
+                        if (running.get() ){
+                            try{
+                                Thread.sleep(500);
+                                extender.checklistLogic.logNewChecklistEntry(url);
+                                scanStatusLabel.setText("Fetching " + counter + " out of " + articleURLs.size());
+                                counter++;
+                            }
+                            catch(InterruptedException e1){
+                                Thread.currentThread().interrupt();
+                            }
                         }
                         else{
                             // need to force stop the logging as new checklist entry here.
                             extender.checklistLog.clear(); //Clears the current checklistLog so there won't be duplicates even if the user clicks on fetch checklist multiple times
+                            break;
                         }
                     }
-                    extender.loggerTable.generateWSTGList();
-                    scanStatusLabel.setText("Checklist successfully generated from the web");
-                    extender.callbacks.issueAlert("Checklist successfully generated from the web");
-                    generateExcelReportButton.setEnabled(true);
-                    cancelFetchButton.setEnabled(false);
-                    saveLocalCopyButton.setEnabled(true);
+                    break;
                 }
+                cancelFetchButton.setEnabled(false);
+                generateExcelReportButton.setEnabled(true);
+                saveLocalCopyButton.setEnabled(true); // For updating local checklist during development phase
+                scanStatusLabel.setText("Checklist successfully generated from the web");
+                extender.callbacks.issueAlert("Checklist successfully generated from the web");
+                extender.loggerTable.generateWSTGList();
+                Thread.currentThread().interrupt();
             };
             thread = new Thread(runnable);
             thread.start();
-            Thread.currentThread().interrupt();
         });
 
         //On clicking, cancel fetch checklist from web
