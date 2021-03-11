@@ -211,7 +211,7 @@ public class ExtenderPanelUI implements Runnable{
 
                 while(running.get() && counter < articleURLs.size()){
                     for (String url : articleURLs){
-                        if (running.get() ){
+                        if (running.get()){
                             try{
                                 Thread.sleep(500);
                                 extender.checklistLogic.logNewChecklistEntry(url);
