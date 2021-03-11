@@ -62,7 +62,7 @@ public class ExtenderPanelUI implements Runnable{
     JButton enableScanningButton;
     private JButton generateWebChecklistButton;
     private Thread thread;
-    private final AtomicBoolean running = new AtomicBoolean(false);
+    public final AtomicBoolean running = new AtomicBoolean(false);
     public JButton cancelFetchButton;
     private JButton saveLocalCopyButton;
     private JButton generateLocalChecklistButton;
@@ -204,7 +204,6 @@ public class ExtenderPanelUI implements Runnable{
             generateWebChecklistButton.setEnabled(false);
             extender.checklistLog.clear(); //Clears the current checklistLog so there won't be duplicates even if the user clicks on fetch checklist multiple times
             running.set(true);
-
             Runnable runnable = () -> {
                 int counter = 1;
                 List<String> articleURLs;
@@ -212,7 +211,7 @@ public class ExtenderPanelUI implements Runnable{
 
                 while(running.get() && counter < articleURLs.size()){
                     for (String url : articleURLs){
-                        if (running.get() ){
+                        if (running.get()){
                             try{
                                 Thread.sleep(500);
                                 extender.checklistLogic.logNewChecklistEntry(url);
@@ -229,6 +228,7 @@ public class ExtenderPanelUI implements Runnable{
                             break;
                         }
                     }
+                    Thread.currentThread().interrupt();
                     break;
                 }
                 cancelFetchButton.setEnabled(false);
