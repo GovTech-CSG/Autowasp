@@ -57,7 +57,7 @@ public class ChecklistLogic implements Serializable {
 	public ChecklistLogic(Autowasp extender) {
 		this.extender = extender;
 	}
-	
+
 	// Returns a list containing the URLs of all the test articles in order of reference number
 	public List<String> scrapeArticleURLs() {
 		// Get the URLs located within the main content page, which link to each individual section's content pages
@@ -104,7 +104,6 @@ public class ChecklistLogic implements Serializable {
 			extender.stderr.println("Error 1, Github page not found. Cancel fetch");
 			extender.callbacks.issueAlert("Error 1, Github page not found. Cancel fetch");
 			extender.extenderPanelUI.scanStatusLabel.setText("Error 1, Github page not found. Cancel fetch");
-			extender.extenderPanelUI.cancelFetchButton.setEnabled(true);
 		}
 		return null;
 
@@ -136,7 +135,6 @@ public class ChecklistLogic implements Serializable {
 			extender.stderr.println("Error 2, table element not found. Cancel Fetch");
 			extender.callbacks.issueAlert("Error 2, table element not found. Cancel Fetch");
 			extender.extenderPanelUI.scanStatusLabel.setText("Error 2, table element not found. Cancel Fetch");
-			extender.extenderPanelUI.cancelFetchButton.setEnabled(true);
 		}
 		return null;
 	}
@@ -203,7 +201,6 @@ public class ChecklistLogic implements Serializable {
 			extender.stderr.println("Error 3, Content page not found. Cancel fetch");
 			extender.callbacks.issueAlert("Error 3, Content page not found. Cancel fetch");
 			extender.extenderPanelUI.scanStatusLabel.setText("Error 3, Content page not found. Cancel fetch");
-			extender.extenderPanelUI.cancelFetchButton.setEnabled(true);
 		}
 		return null;
 	}
@@ -385,6 +382,7 @@ public class ChecklistLogic implements Serializable {
 					eof = true;
 				}
 			}
+			extender.loggerTable.generateWSTGList();
 			objectInputStream.close();
 		} catch (IOException e) {
 			extender.stdout.println("Cannot read file");
@@ -402,11 +400,10 @@ public class ChecklistLogic implements Serializable {
 	// Saves a local excel file at the directory specified by the user
 	@SuppressWarnings("resource")
 	public void saveToExcelFile(String absoluteFilePath) {
-
 		// Populate your excel checklist data
 		for (LoggerEntry findingEntry: extender.loggerList){
 			// Identify findings that was mapped to OWASP checklist
-			if (findingEntry.getChecklistIssue().isEmpty() || findingEntry.checklistIssue.equals("N.A.")) {
+			if (findingEntry.getChecklistIssue() == null || findingEntry.getChecklistIssue().isEmpty() || findingEntry.checklistIssue.equals("N.A.")) {
 				continue;
 			}
 			// Extract the refID using substring
@@ -538,6 +535,7 @@ public class ChecklistLogic implements Serializable {
 		ChecklistEntry checklistEntry = new ChecklistEntry(this.getTableElements(url), this.getContentElements(url), url);
 		checklistEntry.cleanEntry();
 		extender.checklistTableModel.addValueAt(checklistEntry, row, row);
+		extender.checkListHashMap.put(checklistEntry.refNumber,checklistEntry);
 	}
 	
 	// Adds a ChecklistEntry object created from a local saved file to the checklistLog using the setValueAt() method

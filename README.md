@@ -42,8 +42,8 @@ Autowasp Logger tab gives penetration testers the ability to extract and consoli
 
 # Installation #
 ## Building the jar 
-***Using IntelliJ IDE***
-
+***Alternatively, you can use the pre-compiled JAR [here](https://github.com/govtech-csg/Autowasp/releases)***
+### Using IntelliJ IDE
 1. Clone the repository to a location of your choice
 ```
 git clone https://github.com/govtech-csg/Autowasp.git
@@ -58,8 +58,20 @@ git clone https://github.com/govtech-csg/Autowasp.git
 ![picture](./images/Setup_project_resources.png)
 7. Click apply at bottom right and close ***Project Settings***
 8. Click Build Project (***Build > Build Project***)
-9. The autowasp.jar file will be built in /repository location/out/artifacts/chosen_jar_name/chosen_jar_name.jar
-***Alternatively, you can use the precompiled jar [here](https://github.com/govtech-csg/Autowasp/releases)***
+9. The autowasp.jar file will be built in `/Autowasp/out/artifacts/autowasp_jar/autowasp.jar`
+
+### Using Command Line
+
+1. Clone the repository to a location of your choice
+```
+git clone https://github.com/govtech-csg/Autowasp.git
+```
+2. Run the following command
+```
+cd Autowasp
+mvn clean compile assembly:single
+```
+3. The autowasp.jar file will be built in `/Autowasp/target/autowasp-1.0-SNAPSHOT-jar-with-dependencies.jar`
 
 ## Installing the jar
  1. Download the release build [here](https://github.com/govtech-csg/Autowasp/releases).
