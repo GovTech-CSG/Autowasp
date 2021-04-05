@@ -385,7 +385,7 @@ public class ChecklistLogic implements Serializable {
 			extender.loggerTable.generateWSTGList();
 			objectInputStream.close();
 		} catch (IOException e) {
-			extender.stdout.println("Cannot read file");
+			extender.stdout.println("Cannot read local import file");
 		}
 		catch (ClassNotFoundException e) {
 			extender.stdout.println("LoggerEntry class not found");

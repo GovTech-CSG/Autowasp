@@ -105,7 +105,7 @@ public class ExtenderPanelUI implements Runnable{
         
         JPanel setupPanel = new JPanel(new FlowLayout(FlowLayout.LEADING, 10, 10));
         setupPanel.add(new JLabel("Target:", SwingConstants.LEFT), BorderLayout.LINE_START);
-        hostField = new JTextField("", 50);
+        hostField = new JTextField("", 20);
         setupPanel.add(hostField);
         JButton addToScopeButton = new JButton("Add Target to Scope");
         addToScopeButton.addActionListener(e -> {
