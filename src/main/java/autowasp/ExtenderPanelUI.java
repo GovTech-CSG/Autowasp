@@ -41,8 +41,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.HyperlinkEvent;
 import java.io.IOException;
 import java.io.File;
-import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
+
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -63,14 +62,14 @@ public class ExtenderPanelUI implements Runnable{
     JButton enableScanningButton;
     private JButton generateWebChecklistButton;
     private Thread thread;
-    private final AtomicBoolean running = new AtomicBoolean(false);
+    public final AtomicBoolean running = new AtomicBoolean(false);
     public JButton cancelFetchButton;
     private JButton saveLocalCopyButton;
     private JButton generateLocalChecklistButton;
     private JButton generateExcelReportButton;
     private JFileChooser fileChooser;
     private File checklistDestDir;
-    private boolean selfUpdateLocal = false;
+    private final boolean selfUpdateLocal = false;
     
     // Loggers UI
 	private JTabbedPane bottomModulesTabs;
@@ -205,36 +204,43 @@ public class ExtenderPanelUI implements Runnable{
             generateWebChecklistButton.setEnabled(false);
             extender.checklistLog.clear(); //Clears the current checklistLog so there won't be duplicates even if the user clicks on fetch checklist multiple times
             running.set(true);
-
             Runnable runnable = () -> {
-                while(running.get()){
-                    try{
-                        Thread.sleep(500);
-                    }
-                    catch(InterruptedException e1){
-                        Thread.currentThread().interrupt();
-                    }
-                    List<String> articleURLs;
-                    articleURLs  = extender.checklistLogic.scrapeArticleURLs();
-                    for (String url : articleURLs) {
+                int counter = 1;
+                List<String> articleURLs;
+                articleURLs  = extender.checklistLogic.scrapeArticleURLs();
+
+                while(running.get() && counter < articleURLs.size()){
+                    for (String url : articleURLs){
                         if (running.get()){
-                            extender.checklistLogic.logNewChecklistEntry(url);
+                            try{
+                                Thread.sleep(500);
+                                extender.checklistLogic.logNewChecklistEntry(url);
+                                scanStatusLabel.setText("Fetching " + counter + " out of " + articleURLs.size());
+                                counter++;
+                            }
+                            catch(InterruptedException e1){
+                                Thread.currentThread().interrupt();
+                            }
                         }
                         else{
                             // need to force stop the logging as new checklist entry here.
                             extender.checklistLog.clear(); //Clears the current checklistLog so there won't be duplicates even if the user clicks on fetch checklist multiple times
+                            break;
                         }
                     }
+                    Thread.currentThread().interrupt();
+                    break;
                 }
+                cancelFetchButton.setEnabled(false);
+                generateExcelReportButton.setEnabled(true);
+                saveLocalCopyButton.setEnabled(true); // For updating local checklist during development phase
+                scanStatusLabel.setText("Checklist successfully generated from the web");
+                extender.callbacks.issueAlert("Checklist successfully generated from the web");
+                extender.loggerTable.generateWSTGList();
+                Thread.currentThread().interrupt();
             };
             thread = new Thread(runnable);
             thread.start();
-            scanStatusLabel.setText("Checklist successfully generated from the web");
-            extender.callbacks.issueAlert("Checklist successfully generated from the web");
-            extender.loggerTable.generateWSTGList();
-            generateExcelReportButton.setEnabled(true);
-            saveLocalCopyButton.setEnabled(true);
-            Thread.currentThread().interrupt();
         });
 
         //On clicking, cancel fetch checklist from web
@@ -255,11 +261,9 @@ public class ExtenderPanelUI implements Runnable{
         generateLocalChecklistButton = new JButton("Upload Local WSTG Checklist");
         generateLocalChecklistButton.addActionListener(e -> {
             generateLocalChecklistButton.setEnabled(false);
-            generateWebChecklistButton.setEnabled(true);
-            cancelFetchButton.setEnabled(false);
+            generateWebChecklistButton.setEnabled(false);
             generateExcelReportButton.setEnabled(true);
             extender.checklistLogic.loadLocalCopy();
-            extender.loggerTable.generateWSTGList();
             scanStatusLabel.setText("Local checklist uploaded to Autowasp.");
         });
         

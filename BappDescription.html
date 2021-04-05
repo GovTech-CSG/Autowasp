@@ -1,0 +1,19 @@
+<p>Autowasp, a Burp Suite extension that integrates Burp issues logging, with OWASP Web Security Testing Guide (WSTG), to provide a streamlined web security testing flow for the modern-day penetration tester! This tool will guide new penetration testers to understand the best practices of web application security and automate OWASP WSTG checks. </p>
+
+<p>Currently, Autowasp supports the following functionalities:</p>
+<ul>
+	<li>Testing checklist provided by OWASP WSTG</li>
+	<li>Logger tool giving penetration testers the ability to extract and consolidate Burp Scanner issues and Proxy/Repeater/Intruder logs.</li>
+	<li>Map flagged issues to checklist and generate into excel file</li>
+</ul>
+
+<p>A general testing workflow using Autowasp would include the following steps:</p>
+<ol>
+	<li>Display the OWASP checklist in Autowasp for reference.</li>
+	<li>Add the target URL to Scope. The scope function will extract related results from Burp Scanner and listen for insecure web request and responses.</li>
+	<li>Map the scan issues to specific test cases in the checklist. OR</li>
+	<li>Manually explore the website's pages, then click Enable Burp Scanner Logging to display the scanner issues under the Logger tab.</li>
+	<li>Map findings to the checklist.</li>
+	<li>Insert security observations and evidence associated with the logs.</li>
+	<li>Generate a report containing the checklist, logs, evidence, and comments.</li>
+</ol>
