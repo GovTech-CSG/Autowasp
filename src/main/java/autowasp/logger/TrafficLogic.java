@@ -466,7 +466,5 @@ public class TrafficLogic {
         findingEntry.setPenTesterComments(comments + "\n" + trafficMsg);
 
         extender.loggerTableModel.addAllLoggerEntry(findingEntry);
-
-        this.resetLogMsg();
     }
 }
