@@ -354,19 +354,31 @@ public class TrafficLogic {
     // Method to inspect for server info
     private void verifyServerInfoLeakage() {
         boolean toLog = false;
+        String header = null;
         try {
-            String header = responseHeaderList.get(2);
-            String[] tokens = header.split(":");
-
-            if (header.toLowerCase().contains("server") && tokens[1].length() != 1) {
-                trafficMsg = "[+] Potential Server Details : " + tokens[1] + "\n";
-                toLog = true;
+            // Iterate through all response headers to find first Server or x-powered-by header
+            for (int i = 0; i < responseHeaderList.size(); i++) {
+                header = responseHeaderList.get(i);
+                String[] tokens = header.split(":");
+                // Check that there are at least two tokens
+                // If so assume that token[0] is the header name and token[1] is the header value
+                if (tokens.length >= 2) {
+                    String headerName = tokens[0].trim();
+                    String headerValue = tokens[1].trim();
+                    if (headerName.toLowerCase().contains("server") && !headerValue.isEmpty()) {
+                        trafficMsg = "[+] Potential Server Details : " + headerValue + "\n";
+                        toLog = true;
+                        break;
+                    } else if (headerName.toLowerCase().contains("x-powered-by") && !headerValue.isEmpty()) {
+                        trafficMsg = "[+] Web Server powered by : " + headerValue + "\n";
+                        toLog = true;
+                        break;
+                    }
+                } else {
+                    continue;
+                }
             }
 
-            if (header.toLowerCase().contains("x-powered-by") && tokens[1].length() != 1) {
-                trafficMsg = "[+] Web Server powered by : " + tokens[1] + "\n";
-                toLog = true;
-            }
             if (toLog) {
                 this.serverDetailFlag = true;
                 this.flag = "Server Information Leakage";
