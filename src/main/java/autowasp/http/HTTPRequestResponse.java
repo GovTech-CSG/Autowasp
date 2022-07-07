@@ -22,7 +22,7 @@ import burp.IHttpService;
 
 import java.io.Serializable;
 
-public class HTTPRequestResponse implements IHttpRequestResponse, IHttpRequestResponsePersisted, Serializable {
+public class HTTPRequestResponse implements IHttpRequestResponse, Serializable {
 
     private byte[] request;
     private byte[] response;
@@ -94,8 +94,4 @@ public class HTTPRequestResponse implements IHttpRequestResponse, IHttpRequestRe
         this.httpService = new HTTPService(httpService);
     }
 
-    @Override
-    public void deleteTempFiles() {
-
-    }
 }
