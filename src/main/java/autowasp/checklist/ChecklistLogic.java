@@ -368,7 +368,7 @@ public class ChecklistLogic implements Serializable {
 			}
 		};
 
-		InputStream inputStream = getClass().getResourceAsStream("/OWASP_WSTG_local_06Apr2021");
+		InputStream inputStream = getClass().getResourceAsStream("/OWASP_WSTG_local_07Jul2022");
 		try{
 			ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
 
