@@ -466,7 +466,7 @@ public class TrafficLogic {
 		URL url = extender.helpers.analyzeRequest(message.getMessageInfo()).getUrl();
 		String confidence = "Certain";
 		String severity = "~";
-		HTTPRequestResponse requestResponse = new HTTPRequestResponse(extender.callbacks.saveBuffersToTempFiles(message.getMessageInfo()));
+		HTTPRequestResponse requestResponse = new HTTPRequestResponse(message.getMessageInfo());
 		InstanceEntry instanceEntry = new InstanceEntry(url, confidence, severity, requestResponse);
 		findingEntry.addInstance(instanceEntry);
 		findingEntry.setPenTesterComments(comments + "\n" + trafficMsg);
